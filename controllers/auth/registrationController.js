@@ -5,3 +5,8 @@ exports.getRegistrationPage = (req, res, next) => {
         pageTitle: "Register"
     });
 };
+
+exports.postRegistrationDetails = (req, res, next) => {
+    console.log('registration details: ' + req.body.isEmployer);
+    
+}
