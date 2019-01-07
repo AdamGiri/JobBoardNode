@@ -19,8 +19,16 @@ const User = sequelize.define('user', {
     },
     isEmployer: {
         type: Sequelize.BOOLEAN,
-        allowNull: false
+        allowNull: true
     }
 });
+
+User.findByEmail = (email) => {
+    return User.find({
+             where: {
+                email: email
+             }
+           });
+};
 
 module.exports = User;
