@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const session = require('express-session');
+const SequelizeSessionStore = require('connect-session-sequelize')(session.Store);
 
 const path = require('path');
 
@@ -13,6 +15,10 @@ const sequelize = require('./util/database/config.js');
 
 const expressApp = express();
 
+const sequelizeSessionStore = new SequelizeSessionStore({
+    db: sequelize
+});
+
 expressApp.set("view engine", "ejs");
 expressApp.set("views", "views");
 
@@ -20,10 +26,19 @@ expressApp.use(bodyParser.urlencoded({extended : false}));
 
 expressApp.use(express.static(path.join(__dirname, "public")));
 
+expressApp.use(session({
+    store: sequelizeSessionStore,
+    saveUninitialized: false, 
+    resave: false, 
+    secret: 'My-Secret'}));
+
 expressApp.use(registrationRoutes);
 expressApp.use(homeRoutes);
 
-sequelize.sync({logging: console.log})
+sequelizeSessionStore.sync()
+    .then((result) => {
+        sequelize.sync({logging: console.log})
+    })
     .then((result) => {
         jobPosting.create({
             title: 'NHS',

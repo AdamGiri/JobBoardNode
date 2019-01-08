@@ -3,7 +3,7 @@ const expressApp = require('express');
 const user = require('../../models/User');
 
 const REGISTER_PAGE_URL = '/register';
-const REGISTER_PAGE_VIEW_URL = 'auth/registrationPage.ejs';
+const REGISTER_PAGE_VIEW_URL = 'auth/registrationPage.ejs'; 
 
 const HOME_PAGE_URL = '/home';
 
@@ -23,16 +23,15 @@ const renderRegistrationPage = (res, userExists) => {
 
 exports.postRegistrationDetails = (req, res, next) => {
     user.findByEmail(req.body.email)
-        .then((user) => onUserQueried(user, req.body, res))
+        .then((user) => onUserQueried(user, req, res))
         .catch((error) => onError('Error finding user', error));
 };
 
-const onUserQueried = (user, requestBody, res) => {
+const onUserQueried = (user, req, res) => {
     if (!user){
-        createUser(requestBody.email, requestBody.password, requestBody.isEmployer)
-        .then((result) => onUserCreated(res));
+        createUser(req.body.email, req.body.password, req.body.isEmployer)
+        .then((result) => onUserCreated(res, req));
     } else {
-        console.log('User already exists: ' + user.email);
         createRegisterResponsePageForUserAlreadyExisting(res);
     }
 };
@@ -45,8 +44,13 @@ const createUser = (email, password, isEmployer) => {
     });
 };
 
-const onUserCreated = (res) => {
+const onUserCreated = (res, req) => {
+    setUserAsLoggedIn(req);
     gotoHomePage(res);
+};
+
+const setUserAsLoggedIn = (req) => {
+    req.session.isLoggedIn = true;
 };
 
 const gotoHomePage = (res) => {

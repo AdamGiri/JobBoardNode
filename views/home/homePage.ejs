@@ -1,9 +1,12 @@
 <%- include('../includes/head.ejs') %>
-<link rel="stylesheet" href="/css/job-posting.css">
+<link rel="stylesheet" href="/css/job-posting/job-posting.css">
 <link rel="stylesheet" href="/css/typography.css">
+<link rel="stylesheet" href="/css/home/home-page.css">
 </head>
 <body>
+    <div class="home-page-container">
     <% if (jobPostings.length > 0) { %>
+     <div class="job-list-container">
         <h1>Job Postings</h1>
         <% for (let job of jobPostings) { %>
              <ul class='job-posting'>
@@ -12,14 +15,27 @@
                  <li class='white-text'>Employer email: <%= job.employerEmail %></li>
             </ul>
         <% } %>
+     </div>
     <% } %>
     <% if (isEmployer) { %>
+     <div class="employer-create-job-form-container">
         <form> 
-            <div>
+            <div class="form-control">
+                <label for="job-title">Job Title:</label>
                 <input name="job-title" id="job-title">
-                <label for="job-title">Job Title: </label>
             </div>
+            <div class="form-control">
+                <label for="job-description">Job Description:</label>
+                <input name="job-description" id="job-description">
+            </div>
+            <div class="form-control">
+                <label for="employer-email">Employer Email:</label>
+                <input name="employer-email" id="employer-email">
+            </div>
+            <button>Post Job</button>
         </form>
-    <% } %>    
+     </div>
+    <% } %>
+    </div>    
 </body>
 </html>

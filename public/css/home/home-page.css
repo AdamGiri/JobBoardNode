@@ -1,0 +1,19 @@
+.home-page-container {
+    width:100rem;
+    position: fixed;
+    background-color: aqua;
+}
+
+.job-list-container {
+    width: 50rem;
+    position: absolute;
+    display: inline-block;
+    left: 0;
+}
+
+.employer-create-job-form-container {
+    width: 50rem;
+    position: absolute;
+    display: inline-block;
+    right: 0;  
+}
