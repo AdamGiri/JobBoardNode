@@ -17,10 +17,10 @@
                 <input type="checkbox" name="isEmployer" id="isEmployer">
             </div>
             <button type="submit">Register</button>
+            <% if (userExists) { %>
+                <p>This user is already registered</p>
+            <% } %>
         </form>
-        <% if (userExists) { %>
-            <p>This user is already registered</p> 
-        <% } %>
     </main>
 </body>
 </html>

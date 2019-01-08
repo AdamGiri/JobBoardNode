@@ -7,6 +7,7 @@ const registrationRoutes = require('./routes/auth/registration');
 const homeRoutes = require('./routes/home/homeRoutes');
 
 const user = require('./models/User.js');
+const jobPosting = require('./models/JobPosting.js');
 
 const sequelize = require('./util/database/config.js');
 
@@ -22,7 +23,14 @@ expressApp.use(express.static(path.join(__dirname, "public")));
 expressApp.use(registrationRoutes);
 expressApp.use(homeRoutes);
 
-sequelize.sync({logging: console.log, force: true})
+sequelize.sync({logging: console.log})
+    .then((result) => {
+        jobPosting.create({
+            title: 'NHS',
+            description: 'Software developer role',
+            employerEmail: 'adam@gmail.com'
+        });
+    })
     .then((result) => {
         expressApp.listen(3000);
     })

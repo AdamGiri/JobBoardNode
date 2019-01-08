@@ -1,0 +1,25 @@
+<%- include('../includes/head.ejs') %>
+<link rel="stylesheet" href="/css/job-posting.css">
+<link rel="stylesheet" href="/css/typography.css">
+</head>
+<body>
+    <% if (jobPostings.length > 0) { %>
+        <h1>Job Postings</h1>
+        <% for (let job of jobPostings) { %>
+             <ul class='job-posting'>
+                 <li class='white-text'>Title: <%= job.title %></li>
+                 <li class='white-text'>Description: <%= job.description %></li>
+                 <li class='white-text'>Employer email: <%= job.employerEmail %></li>
+            </ul>
+        <% } %>
+    <% } %>
+    <% if (isEmployer) { %>
+        <form> 
+            <div>
+                <input name="job-title" id="job-title">
+                <label for="job-title">Job Title: </label>
+            </div>
+        </form>
+    <% } %>    
+</body>
+</html>
